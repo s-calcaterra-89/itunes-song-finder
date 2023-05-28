@@ -26,7 +26,7 @@ const Home = () => {
       const emptyResult = songs && songs.length === 0;
       if (emptyResult) {
         setPageTitle(searchName);
-        toast.warn(`"No songs found for the artist ${searchName}`);
+        toast.warn(`No songs found for the artist ${searchName}`);
       } else {
         const matchedTitle = getPageTitle(searchName, songs);
         setPageTitle(matchedTitle || searchName);
