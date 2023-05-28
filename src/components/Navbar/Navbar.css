@@ -12,3 +12,69 @@
   background-color: var(--secondary-background);
   z-index: 100;
 }
+
+h1 {
+  --transition-linear: all 0.3s linear;
+  position: relative;
+  padding: 0;
+  margin: 0;
+  font-family: "Raleway", sans-serif;
+  font-weight: 300;
+  font-size: 40px;
+  color: #080808;
+  -webkit-transition: var(--transition-linear);
+  -o-transition: var(--transition-linear);
+  transition: var(--transition-linear);
+}
+
+h1 span {
+  display: block;
+  font-size: 0.5em;
+  line-height: 1.3;
+}
+h1 em {
+  font-style: normal;
+  font-weight: 600;
+}
+
+.page-title-wrapper h1 {
+  font-size: 2em;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-align: center;
+  margin: auto;
+  white-space: nowrap;
+}
+.page-title-wrapper h1:before {
+  background-color: var(--title-line-color);
+  content: "";
+  display: block;
+  height: 2px;
+  width: 75px;
+  margin-bottom: 5px;
+}
+.page-title-wrapper h1:after {
+  background-color: var(--title-line-color);
+  content: "";
+  display: block;
+  position: relative;
+  bottom: 0;
+  top: 37px;
+  height: 2px;
+  width: 75px;
+  margin-bottom: 0.5rem;
+}
+
+@media screen and (max-width: 480px) {
+  .page-title-wrapper h1 {
+    font-size: 1.2em;
+    margin: auto;
+  }
+  .page-title-wrapper h1:before {
+    height: 0px;
+  }
+  .page-title-wrapper h1:after {
+    height: 0px;
+  }
+}

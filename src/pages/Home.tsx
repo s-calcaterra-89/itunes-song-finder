@@ -59,12 +59,15 @@ const Home = () => {
 
   return (
     <>
-      <Navbar pageTitle={pageTitle}></Navbar>
-      <Search
-        inputName={pageTitle}
-        submitCallback={submitCallback}
-        inputValidationCallback={isValidInput}
-      />
+      <div className="fixed-header">
+        <Navbar pageTitle={pageTitle}></Navbar>
+        <Search
+          inputName={pageTitle}
+          submitCallback={submitCallback}
+          inputValidationCallback={isValidInput}
+        />
+        <hr className="hr-custom" />
+      </div>
       {loading ? (
         <Spinner />
       ) : (
