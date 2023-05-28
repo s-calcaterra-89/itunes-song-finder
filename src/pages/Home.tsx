@@ -7,6 +7,7 @@ import SongList from "../components/SongList";
 import { Spinner } from "../components/Spinner/Spinner";
 import useGet from "../hooks/useGet";
 import { ITunesSongApiResponse } from "../models/itunes.model";
+import { getPageTitle } from "../utils/utils";
 import "./Home.css";
 
 const DEFAULT_ARTIST_NAME = "Michael Jackson";
@@ -34,8 +35,10 @@ const Home = () => {
       if (emptyResult) {
         toast.warn(`"No songs found for the artist ${searchName}`);
         setPageTitle(searchName);
+      } else {
+        const matchedTitle = getPageTitle(searchName, songs);
+        setPageTitle(matchedTitle || searchName);
       }
-      setPageTitle(searchName);
     }
   }, [songs, isError]);
 
