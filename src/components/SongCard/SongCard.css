@@ -1,0 +1,43 @@
+.song-card {
+  background-color: var(--secondary-background);
+  border-radius: 8px;
+  box-shadow: var(--light-shadow);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  animation: slide-in 1.2s;
+}
+
+.album-image {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  margin-right: 10px;
+  border-radius: 4px;
+}
+
+.song-details {
+  flex: 1;
+}
+
+.song-name {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.album-name {
+  font-size: 0.85rem;
+  color: #555;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateY(-50%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
