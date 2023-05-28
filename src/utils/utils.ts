@@ -1,5 +1,12 @@
 import { Result } from "../models/itunes.model";
 
+export const handleBackToTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+};
+
 export const groupListByArtistName = (songs: Result[]) => {
   return songs?.reduce((groups: any, result) => {
     const { artistName } = result;
