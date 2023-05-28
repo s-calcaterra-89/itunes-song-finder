@@ -1,4 +1,3 @@
-import React from "react";
 import imgNotFound from "../../images/imgNotFound.svg";
 import "./SongCard.css";
 
