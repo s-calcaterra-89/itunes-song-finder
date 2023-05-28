@@ -1,0 +1,14 @@
+.page-title {
+  color: var(--title-text-color);
+  display: flex;
+  justify-content: center;
+  box-shadow: var(--light-shadow);
+  padding: 10px;
+  border-radius: 0 0 4px 4px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--secondary-background);
+  z-index: 100;
+}
