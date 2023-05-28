@@ -27,6 +27,11 @@ const Home = () => {
 
   const songs = (data as unknown as ITunesSongApiResponse)?.results;
 
+  const submitCallback = (term: string) => {
+    setSearchName(term);
+    setRetries(retries + 1);
+  };
+
   const isValidInput = (value: string) => {
     if ((value || "").trim() === "") {
       toast.error("Please enter an artist name.", {
@@ -42,7 +47,7 @@ const Home = () => {
       <Navbar pageTitle={"Michael Jackson"}></Navbar>
       <Search
         inputName={""}
-        submitCallback={() => console.log("button clicked")}
+        submitCallback={submitCallback}
         inputValidationCallback={isValidInput}
       />
       {loading ? (
