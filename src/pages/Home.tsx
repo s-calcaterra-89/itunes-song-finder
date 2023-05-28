@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Navbar from "../components/Navbar";
@@ -27,6 +27,13 @@ const Home = () => {
 
   const songs = (data as unknown as ITunesSongApiResponse)?.results;
 
+  useEffect(() => {
+    console.log("Home useEffect");
+    if (!isError) {
+      setPageTitle(searchName);
+    }
+  }, [songs, isError]);
+
   const submitCallback = (term: string) => {
     setSearchName(term);
     setRetries(retries + 1);
@@ -44,9 +51,9 @@ const Home = () => {
 
   return (
     <>
-      <Navbar pageTitle={"Michael Jackson"}></Navbar>
+      <Navbar pageTitle={pageTitle}></Navbar>
       <Search
-        inputName={""}
+        inputName={pageTitle}
         submitCallback={submitCallback}
         inputValidationCallback={isValidInput}
       />
