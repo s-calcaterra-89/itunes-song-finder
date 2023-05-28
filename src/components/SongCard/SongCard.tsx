@@ -1,4 +1,5 @@
 import imgNotFound from "../../images/imgNotFound.svg";
+import { Result } from "../../models/itunes.model";
 import "./SongCard.css";
 
 const SongCard = ({
@@ -6,12 +7,7 @@ const SongCard = ({
   artworkUrl100,
   trackName,
   collectionName,
-}: {
-  trackId: string;
-  artworkUrl100: string;
-  trackName: string;
-  collectionName: string;
-}) => {
+}: Partial<Result>) => {
   console.log("SongCard render");
   return (
     <div key={trackId} className="song-card">
