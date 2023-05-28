@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Navbar from "../components/Navbar";
 import Search from "../components/Search";
@@ -26,16 +26,24 @@ const Home = () => {
   console.log("data : " + data);
 
   const songs = (data as unknown as ITunesSongApiResponse)?.results;
+
+  const isValidInput = (value: string) => {
+    if ((value || "").trim() === "") {
+      toast.error("Please enter an artist name.", {
+        position: "top-right",
+      });
+      return false;
+    }
+    return true;
+  };
+
   return (
     <>
       <Navbar pageTitle={"Michael Jackson"}></Navbar>
       <Search
         inputName={""}
         submitCallback={() => console.log("button clicked")}
-        inputValidationCallback={() => {
-          console.log("input valid");
-          return true;
-        }}
+        inputValidationCallback={isValidInput}
       />
       {loading ? (
         <Spinner />
