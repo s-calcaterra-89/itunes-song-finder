@@ -3,6 +3,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Navbar from "../components/Navbar";
 import Search from "../components/Search";
 import SongList from "../components/SongList";
+import { Spinner } from "../components/Spinner/Spinner";
 import useGet from "../hooks/useGet";
 import { ITunesSongApiResponse } from "../models/itunes.model";
 import "./Home.css";
@@ -35,10 +36,14 @@ const Home = () => {
           return true;
         }}
       />
-      {songs && (
-        <>
-          <SongList songs={[...songs]} />
-        </>
+      {loading ? (
+        <Spinner />
+      ) : (
+        songs && (
+          <>
+            <SongList songs={[...songs]} />
+          </>
+        )
       )}
     </>
   );
