@@ -83,13 +83,11 @@ export const getPageTitle = (searchName: string, songs: Result[]) => {
   try {
     const groupedLists: { [artistName: string]: Result[] } =
       groupListByArtistName(songs);
-    console.log("grouped lists", groupedLists);
     if (groupedLists) {
       const { bestMatchingGroup } = getArtistMatchingInfo(
         groupedLists,
         searchName
       );
-      console.log("bestMatchingGroup Group:", bestMatchingGroup);
       const bestMatchingArtistName = bestMatchingGroup?.matchedArtistName;
       if (bestMatchingArtistName) {
         pageTitle = bestMatchingArtistName;

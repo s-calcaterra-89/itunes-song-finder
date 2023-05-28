@@ -10,26 +10,18 @@ import { ITunesSongApiResponse } from "../models/itunes.model";
 import { getPageTitle } from "../utils/utils";
 import "./Home.css";
 
-const DEFAULT_ARTIST_NAME = "Michael Jackson";
+const DEFAULT_ARTIST_NAME = "Pink Floyd";
 
 const Home = () => {
   const [pageTitle, setPageTitle] = useState(DEFAULT_ARTIST_NAME);
   const [searchName, setSearchName] = useState(DEFAULT_ARTIST_NAME);
   const [retries, setRetries] = useState(0);
 
-  console.log("Home Render");
-  console.log("retries" + retries);
   const { loading, isError, data } = useGet({ term: searchName, retries });
-
-  console.log("Loading : " + loading);
-  console.log("searchName : " + searchName);
-  console.log("isError : " + isError);
-  console.log("data : " + data);
 
   const songs = (data as unknown as ITunesSongApiResponse)?.results;
 
   useEffect(() => {
-    console.log("Home useEffect");
     if (!isError) {
       const emptyResult = songs && songs.length === 0;
       if (emptyResult) {

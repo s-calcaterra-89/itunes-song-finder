@@ -8,7 +8,6 @@ const SongCard = ({
   trackName,
   collectionName,
 }: Partial<Result>) => {
-  console.log("SongCard render");
   return (
     <div key={trackId} className="song-card">
       <div>

@@ -19,11 +19,9 @@ const useGet = ({
 
   useEffect(() => {
     const fetchSongs = async () => {
-      console.log("fetch called");
       const searchTerm = (term || "").trim();
       if (searchTerm === "") return;
       try {
-        console.log("fetching....");
         setLoading(true);
         const response = await apiManager.get(SONG_API_URL, {
           params: {
