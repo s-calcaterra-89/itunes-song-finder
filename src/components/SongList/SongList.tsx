@@ -1,4 +1,5 @@
 import { Result } from "../../models/itunes.model";
+import { BackToTop } from "../BackToTop/BackToTop";
 import SongCard from "../SongCard";
 import "./SongList.css";
 
@@ -11,6 +12,7 @@ const SongList = ({ songs }: { songs: Result[] }) => {
           <SongCard {...song} key={song?.trackId} />
         ))}
       </div>
+      <BackToTop />
     </div>
   );
 };
