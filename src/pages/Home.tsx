@@ -30,6 +30,11 @@ const Home = () => {
   useEffect(() => {
     console.log("Home useEffect");
     if (!isError) {
+      const emptyResult = songs && songs.length === 0;
+      if (emptyResult) {
+        toast.warn(`"No songs found for the artist ${searchName}`);
+        setPageTitle(searchName);
+      }
       setPageTitle(searchName);
     }
   }, [songs, isError]);
