@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Navbar from "../components/Navbar";
 import Search from "../components/Search";
@@ -45,6 +46,13 @@ const Home = () => {
           </>
         )
       )}
+      <ToastContainer
+        position="bottom-right"
+        autoClose={1500}
+        hideProgressBar
+        closeOnClick
+        pauseOnHover
+      />
     </>
   );
 };
