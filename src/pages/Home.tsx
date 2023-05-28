@@ -33,14 +33,14 @@ const Home = () => {
     if (!isError) {
       const emptyResult = songs && songs.length === 0;
       if (emptyResult) {
-        toast.warn(`"No songs found for the artist ${searchName}`);
         setPageTitle(searchName);
+        toast.warn(`"No songs found for the artist ${searchName}`);
       } else {
         const matchedTitle = getPageTitle(searchName, songs);
         setPageTitle(matchedTitle || searchName);
       }
     }
-  }, [songs, isError]);
+  }, [songs, isError, searchName]);
 
   const submitCallback = (term: string) => {
     setSearchName(term);
