@@ -32,7 +32,8 @@ const Home = () => {
         setPageTitle(matchedTitle || searchName);
       }
     }
-  }, [songs, isError, searchName]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [songs, isError]);
 
   const submitCallback = (term: string) => {
     setSearchName(term);
