@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Navbar from "../components/Navbar";
 import Search from "../components/Search";
@@ -13,72 +13,69 @@ import "./Home.css";
 const DEFAULT_ARTIST_NAME = "Pink Floyd";
 
 const Home = () => {
-  const [pageTitle, setPageTitle] = useState(DEFAULT_ARTIST_NAME);
-  const [searchName, setSearchName] = useState(DEFAULT_ARTIST_NAME);
-  const [retries, setRetries] = useState(0);
+	const [pageTitle, setPageTitle] = useState(DEFAULT_ARTIST_NAME);
+	const [searchName, setSearchName] = useState(DEFAULT_ARTIST_NAME);
+	const { isLoading, isError, data, refetch } = useGet({ term: searchName });
+	const songs = (data as unknown as ITunesSongApiResponse)?.results;
 
-  const { loading, isError, data } = useGet({ term: searchName, retries });
+	useEffect(() => {
+		if (!isError) {
+			const emptyResult = songs && songs.length === 0;
+			if (emptyResult) {
+				setPageTitle(searchName);
+				toast.warn(`No songs found for the artist ${searchName}`);
+			} else {
+				const matchedTitle = getPageTitle(searchName, songs);
+				setPageTitle(matchedTitle || searchName);
+			}
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [songs, isError]);
 
-  const songs = (data as unknown as ITunesSongApiResponse)?.results;
+	const submitCallback = (term: string) => {
+		setSearchName(term);
+		refetch();
+	};
 
-  useEffect(() => {
-    if (!isError) {
-      const emptyResult = songs && songs.length === 0;
-      if (emptyResult) {
-        setPageTitle(searchName);
-        toast.warn(`No songs found for the artist ${searchName}`);
-      } else {
-        const matchedTitle = getPageTitle(searchName, songs);
-        setPageTitle(matchedTitle || searchName);
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [songs, isError]);
+	const isValidInput = (value: string) => {
+		if ((value || "").trim() === "") {
+			toast.error("Please enter an artist name.", {
+				position: "top-right",
+			});
+			return false;
+		}
+		return true;
+	};
 
-  const submitCallback = (term: string) => {
-    setSearchName(term);
-    setRetries(retries + 1);
-  };
-
-  const isValidInput = (value: string) => {
-    if ((value || "").trim() === "") {
-      toast.error("Please enter an artist name.", {
-        position: "top-right",
-      });
-      return false;
-    }
-    return true;
-  };
-
-  return (
-    <>
-      <div className="fixed-header">
-        <Navbar pageTitle={pageTitle}></Navbar>
-        <Search
-          inputName={pageTitle}
-          submitCallback={submitCallback}
-          inputValidationCallback={isValidInput}
-        />
-        <hr className="hr-custom" />
-      </div>
-      {loading ? (
-        <Spinner />
-      ) : (
-        songs && (
-          <>
-            <SongList songs={[...songs]} />
-          </>
-        )
-      )}
-      <ToastContainer
-        position="bottom-right"
-        autoClose={1500}
-        hideProgressBar
-        closeOnClick
-        pauseOnHover
-      />
-    </>
-  );
+	return (
+		<>
+			<div className='fixed-header'>
+				<Navbar pageTitle={pageTitle}></Navbar>
+				<Search
+					inputName={pageTitle}
+					submitCallback={submitCallback}
+					inputValidationCallback={isValidInput}
+				/>
+				<hr className='hr-custom' />
+			</div>
+			{isLoading ? (
+				<Spinner />
+			) : (
+				songs && (
+					<>
+						<SongList songs={[...songs]} />
+					</>
+				)
+			)}
+			<ToastContainer
+				position='bottom-right'
+				autoClose={1500}
+				hideProgressBar
+				closeOnClick
+				pauseOnHover
+			/>
+		</>
+	);
 };
 
 export default Home;
