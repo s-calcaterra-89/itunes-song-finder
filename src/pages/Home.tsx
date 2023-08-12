@@ -47,6 +47,10 @@ const Home = () => {
 		return true;
 	};
 
+	if (isError && !toast.isActive(searchName))
+		toast.error(`Oops something went wrong... Please try again.`, {
+			toastId: searchName,
+		});
 	return (
 		<>
 			<div className='fixed-header'>
