@@ -9,6 +9,7 @@ import useGet from "../hooks/useGet";
 import { ITunesSongApiResponse } from "../models/itunes.model";
 import { getPageTitle } from "../utils/utils";
 import "./Home.css";
+import useGetAlbum from "../hooks/useGetAlbum";
 
 const DEFAULT_ARTIST_NAME = "Pink Floyd";
 
@@ -17,6 +18,8 @@ const Home = () => {
 	const [searchName, setSearchName] = useState(DEFAULT_ARTIST_NAME);
 	const { isLoading, isError, data, refetch } = useGet({ term: searchName });
 	const songs = (data as unknown as ITunesSongApiResponse)?.results;
+
+	const { data: albums } = useGetAlbum({ term: searchName });
 
 	useEffect(() => {
 		if (!isError) {
@@ -65,12 +68,14 @@ const Home = () => {
 			{isLoading ? (
 				<Spinner />
 			) : (
-				songs && (
-					<>
-						<SongList songs={[...songs]} />
-					</>
-				)
+				<></>
+				// songs && (
+				// 	<>
+				// 		<SongList songs={[...songs]} />
+				// 	</>
+				// )
 			)}
+			{albums && albums.map((album: any) => <div>album: {album}</div>)}
 			<ToastContainer
 				position='bottom-right'
 				autoClose={1500}
