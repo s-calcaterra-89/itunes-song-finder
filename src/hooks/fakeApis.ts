@@ -20,9 +20,9 @@ export const fakeApiCallSecurity = () => {
 	return new Promise((resolve) => {
 		setTimeout(() => {
 			resolve([
-				{ id: 1, name: `Security Item ${Math.random()}` },
-				{ id: 2, name: `Security Item ${Math.random()}` },
-				{ id: 3, name: `Security Item ${Math.random()}` },
+				{ id: 1, name: `Security Item ${Math.random()}`, securityLevel: 1 },
+				{ id: 2, name: `Security Item ${Math.random()}`, securityLevel: 2 },
+				{ id: 3, name: `Security Item ${Math.random()}`, securityLevel: 5 },
 			]);
 		}, 1000); // Simulate 1 second delay
 	});
@@ -37,6 +37,23 @@ export const useGetGeneral = (enabled: boolean) => {
 	});
 };
 
+export const useGetTwoFactor = (enabled: boolean) => {
+	const { data, ...restOfProps } = useQuery({
+		queryKey: ["security-settings"],
+		queryFn: fakeApiCallSecurity,
+		staleTime: 60000,
+		enabled,
+	});
+
+	return {
+		data: (data as any)?.map((item: any) => {
+			const secLevel = item.securityLevel++;
+			return secLevel;
+		}),
+		...restOfProps,
+	};
+};
+
 export const useGetSecurity = (enabled: boolean) => {
 	return useQuery({
 		queryKey: ["security-settings"],
@@ -45,7 +62,6 @@ export const useGetSecurity = (enabled: boolean) => {
 		enabled,
 	});
 };
-
 export const usePrefetchSecurity = async () => {
 	const queryClient = useQueryClient();
 	// The results of this query will be cached like a normal query

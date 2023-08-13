@@ -6,7 +6,7 @@ import {
 	fakeApiCallSecurity,
 	useGetGeneral,
 	useGetSecurity,
-	usePrefetchSecurity,
+	useGetTwoFactor,
 } from "../hooks/fakeApis";
 
 // Mocked Nested Components
@@ -81,7 +81,30 @@ const PasswordSettings = (hidden: boolean) => {
 	);
 	return <div>Password Settings</div>;
 };
-const TwoFactorSettings = () => <div>Two-Factor Settings</div>;
+const TwoFactorSettings = (hidden: boolean) => {
+	console.log("TwoFactorSettings - hidden", hidden);
+	const { isLoading, isError, data, refetch } = useGetTwoFactor(!hidden);
+	const queryClient = useQueryClient();
+
+	return isLoading ? (
+		<div>Loading TwoFactor Settings...</div>
+	) : (
+		<>
+			<div>TwoFactor Settings...</div>
+			<button
+				onClick={() => {
+					queryClient.invalidateQueries(["security-settings"]);
+				}}
+			>
+				update TwoFactor
+			</button>
+			{(data as any)?.map((securityLevel: any) => (
+				<div>{securityLevel}</div>
+			))}
+		</>
+	);
+	return <div>TwoFactor Settings</div>;
+};
 const ThemeSettings = () => <div>Theme Settings</div>;
 const FontSettings = () => <div>Font Settings</div>;
 const GeneralSettings = () => <div>General Settings</div>;
@@ -93,6 +116,7 @@ const settingsComponents = [
 		name: "General",
 		component: GeneralSettings,
 		keywords: ["general", "common", "basic"],
+		queryKey: "general-settings",
 		nestedComponents: [
 			{
 				name: "Language",
@@ -110,6 +134,7 @@ const settingsComponents = [
 		name: "Security",
 		component: SecuritySettings,
 		keywords: ["security", "password", "authentication"],
+		queryKey: "security-settings",
 		nestedComponents: [
 			{
 				name: "Password",
@@ -129,6 +154,7 @@ const settingsComponents = [
 		name: "Appearance",
 		component: AppearanceSettings,
 		keywords: ["appearance", "theme", "style"],
+		queryKey: "appearance-settings",
 		nestedComponents: [
 			{
 				name: "Theme",
@@ -238,6 +264,7 @@ const FilterableSettingsPage = () => {
 		event: any,
 		newValue: SetStateAction<number>
 	) => {
+		setFilter("");
 		setSelectedTab(newValue);
 		filteredTabs[newValue as number].nestedComponents = filteredTabs[
 			newValue as number
@@ -256,7 +283,7 @@ const FilterableSettingsPage = () => {
 
 		// The results of this query will be cached like a normal query
 		await queryClient.prefetchQuery({
-			queryKey: ["security-settings"],
+			queryKey: [filteredTabs[newValue as number].queryKey],
 			queryFn: fakeApiCallSecurity,
 			staleTime: 60000,
 		});
