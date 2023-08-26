@@ -1,10 +1,9 @@
-import React from "react";
-import Home from "./pages/Home";
 import "./App.css";
-import FilterableSettingsPage from "./pages/FilterableSettings";
+import CardPage from "./pages/CardPage";
 
 const App = () => {
-	return <FilterableSettingsPage />;
+	// return <Home />;
+	return <CardPage />;
 };
 
 export default App;
