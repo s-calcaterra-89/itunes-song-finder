@@ -1,15 +1,16 @@
 import AddIcon from "@mui/icons-material/Add";
+import { Dialog, Divider, Typography } from "@mui/material";
+import { useReducer } from "react";
+import { items } from "../../data";
+import { cardReducer } from "../../reducers/cardReducer";
 import BadgeCard from "../CustomCard/BadgeCard";
-import { useState } from "react";
-import { CardContainerState } from "../../models/card.model";
-import { Dialog, Typography } from "@mui/material";
-
-interface AddItemCardContainerState extends CardContainerState {}
 
 const AddItemCardContainer = () => {
 	console.log("AddItemCardContainer render");
-	const [state, setState] = useState<AddItemCardContainerState>({
+
+	const [state, dispatch] = useReducer(cardReducer, {
 		openModal: false,
+		items: items,
 	});
 
 	return (
@@ -22,19 +23,32 @@ const AddItemCardContainer = () => {
 				badgeContent={<AddIcon />}
 				badgeAction={() => {
 					console.log("item added");
-					return setState((state) => ({ ...state, openModal: true }));
+					dispatch({
+						type: "add_item",
+						nextItem: {
+							name: "Paperoga",
+							age: 80,
+						},
+					});
+					// return setState((state) => ({ ...state, openModal: true }));
 				}}
 				badgeSxProps={{
 					background:
 						"linear-gradient(195deg, rgb(2, 137, 38), rgb(25, 192, 36))",
 				}}
 			>
-				Things to be added...
+				{state.items.map((item: any) => (
+					<div key={Math.random()}>
+						<div>Name: {item.name}</div>
+						<div>Age: {item.age}</div>
+						<Divider></Divider>
+					</div>
+				))}
 			</BadgeCard>
 			{state.openModal && (
 				<Dialog
 					open={state.openModal}
-					onClose={() => setState((state) => ({ ...state, openModal: false }))}
+					onClose={() => dispatch({ type: "close_modal" })}
 				>
 					<Typography sx={{ p: 5 }} component={"p"}>
 						item added!
