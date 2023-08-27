@@ -12,7 +12,6 @@ export const cardReducer = (
 			return action.nextItem
 				? {
 						...state,
-						openModal: true,
 						items: state.items.splice(0, state.items.length - 1),
 				  }
 				: state;
@@ -21,22 +20,9 @@ export const cardReducer = (
 			return action.nextItem
 				? {
 						...state,
-						openModal: true,
 						items: [...state.items, action.nextItem],
 				  }
 				: state;
-		}
-		case "open_modal": {
-			return {
-				...state,
-				openModal: true,
-			};
-		}
-		case "close_modal": {
-			return {
-				...state,
-				openModal: false,
-			};
 		}
 	}
 	throw Error("Unknown action: " + action.type);

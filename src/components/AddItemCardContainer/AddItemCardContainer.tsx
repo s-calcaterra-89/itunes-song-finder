@@ -4,14 +4,16 @@ import { useReducer } from "react";
 import { items } from "../../data";
 import { cardReducer } from "../../reducers/cardReducer";
 import BadgeCard from "../CustomCard/BadgeCard";
+import { useDialog } from "../../providers/DialogProvider";
 
 const AddItemCardContainer = () => {
 	console.log("AddItemCardContainer render");
 
 	const [state, dispatch] = useReducer(cardReducer, {
-		openModal: false,
 		items: items,
 	});
+
+	const { openDialog, closeDialog } = useDialog();
 
 	return (
 		<>
@@ -30,7 +32,14 @@ const AddItemCardContainer = () => {
 							age: 80,
 						},
 					});
-					// return setState((state) => ({ ...state, openModal: true }));
+					openDialog({
+						onClose: closeDialog,
+						children: (
+							<Typography sx={{ p: 5 }} component={"p"}>
+								item added!
+							</Typography>
+						),
+					});
 				}}
 				badgeSxProps={{
 					background:

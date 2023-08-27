@@ -11,7 +11,7 @@ import BadgeCard from "../CustomCard/BadgeCard";
 const BookmarkCardContainer = () => {
 	console.log("BookmarkCardContainer render");
 
-	const [openDialog, closeDialog] = useDialog();
+	const { openDialog, closeDialog } = useDialog();
 	const openNestedDialog = () => {
 		openDialog({
 			children: (

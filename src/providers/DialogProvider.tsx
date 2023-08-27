@@ -2,11 +2,17 @@ import { createContext, useContext, useRef, useState } from "react";
 import DialogContainer from "../components/DialogContainer/DialogContainer";
 import { ClickAwayListener } from "@mui/material";
 
-type ProviderContext = readonly [(option: DialogOption) => void, () => void];
+type ProviderContext = {
+	openDialog: (option: DialogOption) => void;
+	closeDialog: () => void;
+};
 
 const EMPTY_FUNC = () => {};
 
-const DialogContext = createContext<ProviderContext>([EMPTY_FUNC, EMPTY_FUNC]);
+const DialogContext = createContext<ProviderContext>({
+	openDialog: EMPTY_FUNC,
+	closeDialog: EMPTY_FUNC,
+});
 export type DialogParams = {
 	children: React.ReactNode;
 	open: boolean;
@@ -33,7 +39,7 @@ export default function DialogProvider({ children }: any) {
 			return [...dialogs];
 		});
 	};
-	const contextValue = useRef([openDialog, closeDialog] as const);
+	const contextValue = useRef({ openDialog, closeDialog } as const);
 	return (
 		<DialogContext.Provider value={contextValue.current}>
 			{children}

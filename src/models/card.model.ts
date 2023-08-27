@@ -6,7 +6,7 @@ export interface DisneyItem {
 }
 
 export interface CardContainerState {
-	openModal: boolean;
+	openModal?: boolean;
 	items: DisneyItem[];
 }
 export interface CardContainerReducerPayload extends ReducerPayload {
