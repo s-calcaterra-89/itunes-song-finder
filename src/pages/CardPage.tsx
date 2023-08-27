@@ -25,6 +25,10 @@ const CardPage = () => {
 			</Grid>
 			<Grid item>
 				<BadgeCard
+					titleNode={{
+						title: "Necessary Items",
+						subHeader: "September 14, 2016",
+					}}
 					badgeContent={<AddIcon />}
 					badgeAction={() => console.log("item added")}
 					badgeSxProps={{
@@ -33,11 +37,14 @@ const CardPage = () => {
 					}}
 				>
 					Things to be added...
-					{/* <SongCard {...song} key={song?.trackId} /> */}
 				</BadgeCard>
 			</Grid>
 			<Grid item>
 				<BadgeCard
+					titleNode={{
+						title: "Unnecessary Items",
+						// subHeader: "October 14, 2016",
+					}}
 					badgeContent={<DeleteIcon />}
 					badgeAction={() => console.log("item deleted")}
 					badgeSxProps={{
@@ -46,7 +53,6 @@ const CardPage = () => {
 					}}
 				>
 					Things to be deleted...
-					{/* <SongCard {...song} key={song?.trackId} /> */}
 				</BadgeCard>
 			</Grid>
 		</Grid>
