@@ -8,6 +8,7 @@ interface BadgeCardModel {
 	badgeContent?: any;
 	badgeAction?: any;
 	cardProps?: SxProps;
+	cardHeaderSxProps?: SxProps;
 	badgeSxProps?: SxProps;
 	children?: any;
 }
@@ -38,6 +39,7 @@ const BadgeCard = ({
 	titleNode,
 	badgeContent,
 	badgeSxProps,
+	cardHeaderSxProps,
 	badgeAction,
 	children,
 }: BadgeCardModel) => {
@@ -85,7 +87,7 @@ const BadgeCard = ({
 						<CardHeader
 							title={titleNode.title}
 							subheader={titleNode.subHeader}
-							sx={{ padding: "0.75rem" }}
+							sx={{ padding: "0.75rem", ...cardHeaderSxProps }}
 							titleTypographyProps={{ variant: "body1" }}
 							subheaderTypographyProps={{ variant: "subtitle2" }}
 						/>
