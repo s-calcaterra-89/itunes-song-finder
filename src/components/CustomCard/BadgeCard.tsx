@@ -43,10 +43,11 @@ const BadgeCard = ({
 	badgeAction,
 	children,
 }: BadgeCardModel) => {
+	const cursor = !!badgeAction ? "pointer" : "auto";
 	const badgeProps: SxProps = badgeSxProps
 		? {
 				...defaultBadgeElementStyle,
-				cursor: !!badgeAction ? "pointer" : "auto",
+				cursor,
 				top: titleNode
 					? titleNode.subHeader
 						? "-0.45rem"
@@ -55,7 +56,7 @@ const BadgeCard = ({
 				padding: titleNode?.subHeader ? "-0.39rem" : defaultRemValue,
 				...badgeSxProps,
 		  }
-		: defaultBadgeElementStyle;
+		: { ...defaultBadgeElementStyle, cursor };
 
 	return (
 		<Card
